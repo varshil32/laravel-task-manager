@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AdminController;
@@ -11,6 +12,10 @@ use App\Http\Controllers\PermissionController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Registration routes
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [TaskController::class, 'index'])
@@ -47,7 +52,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/role/store', [RoleController::class, 'store'])->name('admin.role.store');
     Route::delete('/admin/role/delete/{id}', [RoleController::class, 'delete'])->name('admin.role.delete');
     Route::get('/admin/role/edit/{id}', [RoleController::class, 'edit'])->name('admin.role.show');
-    Route::get('/admin/role/edit/{id}', [RoleController::class, 'edit'])->name('admin.role.show');
     Route::post('/admin/role/update/{id}', [RoleController::class, 'update'])->name('admin.role.update');
     Route::post('/admin/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('admin.role.permission');
     Route::delete('/admin/roles/{role}/permissions/{permission}', [RoleController::class, 'revokePermission'])->name('admin.role.revoke');
@@ -61,9 +65,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/permissions/{permission}/roles', [PermissionController::class, 'giveRole'])->name('admin.permission.role');
     Route::delete('/admin/permissions/{permission}/roles/{role}', [PermissionController::class, 'revokeRole'])->name('admin.permission.revoke');
     Route::post('/admin/users/{user}/roles', [AdminController::class, 'assignRole'])->name('admin.users.role');
-    Route::post('/admin/users/{user}/roles', [AdminController::class, 'assignRole'])->name('admin.users.role');
     Route::delete('/admin/users/{user}/roles/{role}', [AdminController::class, 'revokeRole'])->name('admin.users.revokerole');
 });
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
