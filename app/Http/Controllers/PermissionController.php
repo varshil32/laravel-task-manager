@@ -35,14 +35,14 @@ class PermissionController extends Controller
     public function edit($id)
     {
         // dd(Role::with('permissions')->get()->pluck('id'));
-
+        $permission = Permission::findOrFail($id);
         // $roles = Role::with('permissions')->get(); 
         $roles = Role::with('permissions') 
         ->whereDoesntHave('permissions', function ($query) use ($id) {
         $query->where('id', $id);
     })->get();
         // dd($roles);
-        return view("admin.permission.addpermission", compact("roles"));
+        return view("admin.permission.addpermission", compact("roles","permission"));
     }
     public function update(Request $request, $id)
     {
