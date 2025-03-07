@@ -11,15 +11,31 @@ class TaskController extends Controller
 {
     public function add(Request $request)
     {
-        $task=Task::create([
-            'task' => $request->name,
-            'description' => $request->description,
-            'status' => $request->Status,
-            'user_id' => Auth::id()
+        // Validate request
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|max:255', // Ensure it matches DB type
         ]);
-        dd($request->all(), $task->errors());
-        return redirect()->route('dashboard')->with('success', 'Task created successfully');
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        try {
+            $task = Task::create([
+                'task' => $request->input('name'),  // Ensure correct key
+                'description' => $request->input('description', ''),
+                'status' => $request->input('status'),
+                'user_id' => Auth::id(),
+            ]);
+    
+            return redirect()->route('dashboard')->with('success', 'Task created successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to create task: ' . $e->getMessage());
+        }
     }
+    
     public function edit($id)
     {
     $task = Task::findOrFail($id);

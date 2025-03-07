@@ -21,7 +21,7 @@
                         </div>
                         <div class="mb-3 w-full">
                             <label for="Status" class="block text-sm font-medium text-gray-700">Status</label>
-                            <select name="Status" id="Status" class="form-input rounded-md shadow-sm mt-1 block w-full" required>
+                            <select name="Status" id="status" class="form-input rounded-md shadow-sm mt-1 block w-full" required>
                                 <option value="" disabled selected>Select Status</option>
                                 <option value="pending" {{ ($task->status ?? '') == 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="in progress" {{ ($task->status ?? '') == 'in progress' ? 'selected' : '' }}>In Progress</option>
