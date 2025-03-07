@@ -11,15 +11,19 @@ class TaskController extends Controller
 {
     public function add(Request $request)
     {
- 
-
-        $task=Task::create([
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|string|in:pending,in progress,complete',
+        ]);
+    
+        $task = Task::create([
             'task' => $request->name,
             'description' => $request->description,
-            'status' => $request->status,
+            'status' => $request->status, 
             'user_id' => Auth::id()
         ]);
-        dd($request->all(), $task->errors());
+    
         return redirect()->route('dashboard')->with('success', 'Task created successfully');
     }
     public function edit($id)

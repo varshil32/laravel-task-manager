@@ -20,8 +20,8 @@
                             <textarea name="description" id="description" class="form-input rounded-md shadow-sm mt-1 block w-full" rows="4" required>{{ $task->description ?? '' }}</textarea>
                         </div>
                         <div class="mb-3 w-full">
-                            <label for="Status" class="block text-sm font-medium text-gray-700">Status</label>
-                            <select name="Status" id="status" class="form-input rounded-md shadow-sm mt-1 block w-full" required>
+                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                            <select name="status" id="status" class="form-input rounded-md shadow-sm mt-1 block w-full" required>
                                 <option value="" disabled selected>Select Status</option>
                                 <option value="pending" {{ ($task->status ?? '') == 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="in progress" {{ ($task->status ?? '') == 'in progress' ? 'selected' : '' }}>In Progress</option>
