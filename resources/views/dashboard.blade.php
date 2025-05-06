@@ -27,9 +27,9 @@
                         <thead>
                             <tr class="bg-slate-600 text-white">
                                 <th class="px-4 py-2">Id</th>
-                                @if(auth()->user()->hasRole(['admin', 'manager']))
+                                @can('all-task')
                                 <th class="px-4 py-2">User</th>
-                                @endif
+                                @endcan
                                 <th class="px-4 py-2">Task Name</th>
                                 <th class="px-4 py-2">Description</th>
                                 <th class="px-4 py-2">Status</th>
@@ -38,16 +38,16 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="{{ auth()->user()->hasRole(['admin', 'manager']) ? '6' : '5' }}">
+                                <td colspan="{{ auth()->user()->can('see-users') ? '6' : '5' }}">
                                     <hr class="border-t border-gray-300 my-2">
                                 </td>
                             </tr>
                             @foreach ($tasks as $task)
                                 <tr>
                                     <td class="px-4 py-2">{{ $loop->iteration }}</td>
-                                    @if(auth()->user()->hasRole(['admin', 'manager']))
+                                    @can('all-task')
                                     <td class="px-4 py-2">{{ App\Models\User::find($task->user_id)->name }}</td>
-                                    @endif
+                                    @endcan
                                     <td class="px-4 py-2">{{ $task->task }}</td>
                                     <td class="px-4 py-2">{{ $task->description }}</td>
                                     <td class="px-4 py-2">{{ $task->status }}</td>

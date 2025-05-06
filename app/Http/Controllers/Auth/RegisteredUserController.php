@@ -16,7 +16,7 @@ class RegisteredUserController extends Controller
 {
     public function create()
     {
-        return view('auth.register'); // Ensure you have a view named 'register' in the 'auth' directory
+        return view('auth.register'); 
     }
 
     public function store(Request $request)
@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Assign the "user" role to the newly registered user
+      
         $user->assignRole('user');
 
         Auth::login($user);

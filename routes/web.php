@@ -22,7 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('dashboard');
 
     Route::get('/add', function () {
-        return view('add');
+        $users = \App\Models\User::all();
+        return view('add', compact('users'));
     })->middleware('permission:add-task')->name('add');
 
     Route::post('/addtask', [TaskController::class, 'add'])
@@ -43,8 +44,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', [AdminController::class,'index'])->name('admin.index');
-    Route::get('/admin/edit/{id}', [AdminController::class,'edit'])->name('edituser');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->name('edituser');
     Route::delete('/admin/delete/{id}', [AdminController::class, 'deleteuser'])->name('deleteuser');
 
     Route::get('/admin/role', [RoleController::class, 'index'])->name('admin.role');
@@ -74,4 +75,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

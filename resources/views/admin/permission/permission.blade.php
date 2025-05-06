@@ -36,7 +36,7 @@
                                     <form action="{{ route('admin.permission.delete', $permission->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-600 text-white py-2 px-4 rounded-md">Delete</button>
+                                        <button type="submit" class="bg-red-800 text-white py-2 px-4 rounded-md">Delete</button>
                                     </form>
                                 </td>
                             </tr>
